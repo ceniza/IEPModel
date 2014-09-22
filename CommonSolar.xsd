@@ -5,9 +5,8 @@
     Description: Schema includes elements common to defining solar electric or solar thermal systems. Includes elements that define solar exposure (orientation and shading), for example.
     **************************************************************************** -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
-    targetNamespace="http://www.iepmodel.net" elementFormDefault="qualified"
+    targetNamespace="http://www.iepmodel.net" elementFormDefault="unqualified"
     attributeFormDefault="unqualified" version="1.0">
-    <xs:include schemaLocation="Common.xsd"/>
     <xs:complexType name="obstructionElevations">
         <xs:annotation>
             <xs:documentation>A description of the top of an obstruction relative to a define location.  At that location, the obstruction is in the direction define by Azimuth, and the top of that obstruction is at the elevation angle define by Elevation.</xs:documentation>
@@ -1235,5 +1234,48 @@ If an individual module has a tilt edge different from the common value, that ti
                 <xs:documentation>Descriptive name for the array area (a roof face, or ground area).</xs:documentation>
             </xs:annotation>
         </xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="moduleLayout">
+        <xs:sequence>
+            <xs:element name="setbacks" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="setback">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="distance"/>
+                                </xs:sequence>
+                                <xs:attribute name="edgeIdRef" type="xs:string"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="moduleSpaces">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="moduleSpace" type="equipmentLocation"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="exclusionAreas" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="exclusionArea" type="exclusionArea"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute name="installationAreaIdRef" type="xs:IDREF"/>
+    </xs:complexType>
+    <xs:complexType name="exclusionArea">
+        <xs:all>
+            <xs:element name="polygon2dSceneOrthoProjection" type="polygon2d" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="polygon2dSceneCameraView" type="polygon2d" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="polygon2dLocal" type="polygon2d" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:ID"/>
     </xs:complexType>
 </xs:schema>
