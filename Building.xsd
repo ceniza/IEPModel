@@ -354,22 +354,6 @@ For example:
 			<xs:enumeration value="vaulted beams"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="roofEdgeSetbacks">
-		<xs:annotation>
-			<xs:documentation>Defines the Setback dimensions required by permitting jurisdictions for each type of roof line. </xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element minOccurs="0" name="eaveForFlatRoof" type="xs:double"/>
-			<xs:element minOccurs="0" name="eaveForPitchedRoof" type="xs:double"/>
-			<xs:element minOccurs="0" name="ridge" type="xs:double"/>
-			<xs:element minOccurs="0" name="rake" type="xs:double"/>
-			<xs:element minOccurs="0" name="hip" type="xs:double"/>
-			<xs:element minOccurs="0" name="valley" type="xs:double"/>
-			<xs:element minOccurs="0" name="flashing" type="xs:double"/>
-			<xs:element minOccurs="0" name="stepFlashing" type="xs:double"/>
-			<xs:element minOccurs="0" name="mansard" type="xs:double"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="roofFaceStructure">
 		<xs:annotation>
 			<xs:documentation>Describes a roof face's structural attributes important to knowing whether the roof can support the additional weight of added equipment, such as solar panels.</xs:documentation>
@@ -401,44 +385,41 @@ For example:
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType abstract="false" name="roofFaceOLD">
+
+	<xs:simpleType name="roofEdgeTypeEnum">
 		<xs:annotation>
-			<xs:documentation>Definition of a single face of a roof (a 2D polygon), it's orientation with respect to the sun, and any affects of shading. The roofFace is primarily used to define roof faces on which solar panels can be attached. For that reason it also includes structural attributes for each roof face so that structural evaluations can be made.  A roof face can have panels directly laid out on it. roofFace is in the Common XSD so that it can be used in Project XSD for site surveys, as well as within PvSystem XSD for system definitions.</xs:documentation>
+			<xs:documentation>Set of roof edge types. In IEP, roof areas can be described by polygons where solar arrays can be placed. The various roof edge types can have a variety of setback rules associated by type.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="eave"/>
+			<xs:enumeration value="ridge"/>
+			<xs:enumeration value="rake"/>
+			<xs:enumeration value="hip"/>
+			<xs:enumeration value="valley"/>
+			<xs:enumeration value="flashing"/>
+			<xs:enumeration value="step flashing"/>
+			<xs:enumeration value="mansard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="roofEdge">
+		<xs:annotation>
+			<xs:documentation>Defines a single edge of a defined polygon and associates a type to it. Useful for identifying array areas where different edge types have different setback rules.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<!--
-                TODO: this causes ambiguity with derived class polygonLayoutPlane
-                <xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-            -->
-			<xs:element name="name">
+			<xs:element name="startIdRef" type="xs:IDREF">
 				<xs:annotation>
-					<xs:documentation>Used to describe what this Roof Face is.  For example, "SouthEast Roof", etc</xs:documentation>
+					<xs:documentation>ID of the first of two points in a polygon that define one of its edges. Note that all polygon types defined for the roofFace should have the same ID for the points that represent the same polygon vertex.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="azimuth" type="angle">
+			<xs:element name="endIdRef" type="xs:IDREF">
 				<xs:annotation>
-					<xs:documentation>The compass direction of the roof face, typically 90 deg. to the eave. 0 is North, and 180 is south. </xs:documentation>
+					<xs:documentation>ID of the second of two points in a polygon that define one of its edges.  Note that all polygon types defined for the roofFace should have the same ID for the points that represent the same polygon vertex.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="slope" type="angle">
+			<xs:element name="type" type="roofEdgeTypeEnum" minOccurs="0">
+				<!-- not requred for ground areas? -->
 				<xs:annotation>
-					<xs:documentation>The slope angle of the roof face, in degrees.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element maxOccurs="1" minOccurs="0" name="polygon2dSceneOrthoProjection"
-				type="polygon2d">
-				<xs:annotation>
-					<xs:documentation>A 2 dimensional orthgraphic projection of a roof face polygon. The roof face's coordinates exist in a larger scene that may contain multiple roof faces.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element minOccurs="0" name="polygon2dLocal" type="polygon2d">
-				<xs:annotation>
-					<xs:documentation>A 2 dimensional roof face polygon whose point coordinate system is local to only this polygon. This defines actual dimensions of the roof face, not a projection.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element maxOccurs="1" minOccurs="0" name="polygon3dScene" type="polygon3d">
-				<xs:annotation>
-					<xs:documentation>A roof face defined in 3 dimensional space. The roof face's coordinates exist in a larger scene that may contain multiple roof faces.</xs:documentation>
+					<xs:documentation>Type of roof face edge, for example: ridge, eave, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -446,23 +427,8 @@ For example:
 	</xs:complexType>
 	<xs:complexType name="roofFace">
 		<xs:complexContent>
-			<xs:extension base="arrayArea">
+			<xs:extension base="arrayInstallArea">
 				<xs:sequence>
-					<xs:element minOccurs="0" name="polygon2dSceneOrthoProjection" type="polygon2d">
-						<xs:annotation>
-							<xs:documentation>Describes the geometry of the area from an orthographic view straight down (typical of satellite imagery).</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element minOccurs="0" name="polygon2dLocal" type="polygon2d">
-						<xs:annotation>
-							<xs:documentation>A 2 dimensional array area polygon whose point coordinate system is local to only this polygon. This defines actual dimensions of the roof face or ground area, not a projection.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element minOccurs="0" name="polygon3dScene" type="polygon3d">
-						<xs:annotation>
-							<xs:documentation>An array area defined in 3 dimensional space. The area's coordinates exist in a larger scene that may contain multiple roof faces and/or ground areas.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element minOccurs="0" name="edges">
 						<xs:annotation>
 							<xs:documentation>Contains the set of polygon sides that define the roof face.</xs:documentation>
@@ -470,7 +436,7 @@ For example:
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element maxOccurs="unbounded" minOccurs="1" name="edge"
-									type="polygonEdge">
+									type="roofEdge">
 									<xs:annotation>
 										<xs:documentation>A single edge of the roof face that identifies its type. There are different setback rules applied to different types of roof face edges, so each edge's type must be defined. Each edge is defined by two points of a polygon.</xs:documentation>
 									</xs:annotation>

@@ -1,16 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--**************************************************************************
+	schema: Common.xsd v 2.0
+	Author(s):
+	v 2.0 Michael Palmquist (SolarNexus Inc)
+	v 1.x Michael Palmquist (SolarNexus Inc), Devan Johnson (kW Engineering), Paul Cobb (SaveEnergy123)
+	Description: Schema defines a set of object types that are re-used across the set of IEP Model schemas.
+	**************************************************************************** -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
-    targetNamespace="http://www.iepmodel.net" attributeFormDefault="unqualified" version="1.0">
-    <xs:annotation>
-        <xs:documentation>The purpose of this schema is to define a set of types and quantities that are frequently used by other schema and can be referenced in a consistent manner.  
-
-Each object is a ComplexType that includes a Value attribute and a Units attribute, which refers to an associated enumeration of units of measurement.
-
-Some objects have additional attributes that are useful for specifying additional information relevant to the value of the quantity (such as test conditions).
-
-The purpose of these classes/objects is not to indicate the way a quantity is used, but rather the value and unit of measurement of that quantity.
-
-The naming of the element or attribute, which is of a "CommonQuantities" type is the way in which we should indicate the manner in which the quantity is use</xs:documentation>
-    </xs:annotation>
+    elementFormDefault="unqualified" targetNamespace="http://www.iepmodel.net"
+    attributeFormDefault="unqualified" version="1.0">
     <xs:complexType name="dataOriginator">
         <xs:annotation>
             <xs:documentation>This is used to keep track from where the data was obtained.</xs:documentation>
@@ -104,51 +102,6 @@ This is also used for PowerClerk/CSI program</xs:documentation>
             <xs:enumeration value="Residential"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="presenceOfUndergroundEntitiesEnum">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="None"/>
-            <xs:enumeration value="Yes (location marked)"/>
-            <xs:enumeration value="Yes (location TBD)"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:complexType name="groundArea">
-        <xs:annotation>
-            <xs:documentation>A description of the ground area of a site.  Helps describe areas that may be used for ground mount PV Systems.</xs:documentation>
-        </xs:annotation>
-        <xs:sequence maxOccurs="unbounded" minOccurs="0">
-            <xs:element name="name" type="xs:string"/>
-            <xs:element minOccurs="0" name="approxArea" type="area"/>
-            <xs:element maxOccurs="1" minOccurs="0" name="soilCharacter" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>A description of the soil type found here. May be a subjective description, such as rocky, clay, sandy, etc.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element maxOccurs="1" minOccurs="0" name="notes" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>User can capture info about other data fields, and/or describe special circumstances, such as: Types of buried lines and how marked, Equipment &amp;/or materials access issues, whether there is an existing professional soils report, if the site is in a biotic reserve (when applicable), &amp;/or whether an environmental impact report has been done</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element maxOccurs="1" minOccurs="0" name="presenceOfBuriedLines"
-                type="presenceOfUndergroundEntitiesEnum">
-                <xs:annotation>
-                    <xs:documentation>Are there buried lines of any kind? In accompanying notes, user should include if mapped on some document.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element maxOccurs="1" minOccurs="0" name="presenceOfSepticTanksAndLeachFields"
-                type="presenceOfUndergroundEntitiesEnum">
-                <xs:annotation>
-                    <xs:documentation>Is there a septic tank &amp;/or leach field in the vicinity? Auditor needs to clearly identify their location on a site schematic.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element maxOccurs="1" minOccurs="0" name="tractorTrencherAccessible"
-                type="xs:boolean">
-                <xs:annotation>
-                    <xs:documentation>Can a tractor and/or trenching equipment access the ground location?</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID"/>
-    </xs:complexType>
     <xs:complexType name="site">
         <xs:sequence>
             <xs:element maxOccurs="1" minOccurs="1" name="location" type="address">
@@ -184,14 +137,6 @@ Note that if there are more than one street address, the model forces these to b
                     <xs:documentation>Does the site have, or can get broadband internet? Dial-up only probably won't work.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="groundAreas">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="1" name="groundArea"
-                            type="groundArea"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
             <xs:element maxOccurs="1" minOccurs="0" name="weather" type="siteWeatherData"/>
             <xs:element maxOccurs="1" minOccurs="0" name="existingGenerationCapability"
                 type="xs:boolean">
@@ -203,11 +148,6 @@ Note that if there are more than one street address, the model forces these to b
                 type="xs:string">
                 <xs:annotation>
                     <xs:documentation>If site has existing generation, describe the technology. Required for CSI Rebate Reservation.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element maxOccurs="1" minOccurs="0" name="solarDHWExists" type="xs:boolean">
-                <xs:annotation>
-                    <xs:documentation>Site has existing Solar DHW system.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element maxOccurs="1" minOccurs="0" name="notes" type="xs:string"/>
@@ -776,45 +716,6 @@ ISSUES / TO DO:
         <xs:attribute name="id" type="xs:ID"/>
         <xs:attribute name="name" type="xs:string"/>
     </xs:complexType>
-    <xs:simpleType name="polygonEdgeTypeEnum">
-        <xs:annotation>
-            <xs:documentation>Set of polygon edge types. In IEP, polygons commonly used to describe areas where solar arrays can be placed, such as roof faces or ground areas. The various edges types for these areas can have a variety of setback rules associated by type.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="eave - pitched roof"/>
-            <xs:enumeration value="eave - flat roof"/>
-            <xs:enumeration value="ridge"/>
-            <xs:enumeration value="rake"/>
-            <xs:enumeration value="hip"/>
-            <xs:enumeration value="valley"/>
-            <xs:enumeration value="flashing"/>
-            <xs:enumeration value="step flashing"/>
-            <xs:enumeration value="mansard"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:complexType name="polygonEdge">
-        <xs:annotation>
-            <xs:documentation>Defines a single edge of a defined polygon and associates a type to it. Useful for identifying array areas where different edge types have different setback rules.</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="startIdRef" type="xs:IDREF">
-                <xs:annotation>
-                    <xs:documentation>ID of the first of two points in a polygon that define one of its edges. Note that all polygon types defined for the roofFace should have the same ID for the points that represent the same polygon vertex.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="endIdRef" type="xs:IDREF">
-                <xs:annotation>
-                    <xs:documentation>ID of the second of two points in a polygon that define one of its edges.  Note that all polygon types defined for the roofFace should have the same ID for the points that represent the same polygon vertex.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="type" type="polygonEdgeTypeEnum">
-                <xs:annotation>
-                    <xs:documentation>Type of polygon edge. In case of roof face edge, for example: ridge, eave, etc.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID"/>
-    </xs:complexType>
     <xs:complexType name="angle">
         <xs:annotation>
             <xs:documentation>This is a base class used to represent an angular quantity. Units are degrees.</xs:documentation>
@@ -1242,32 +1143,14 @@ http://www.sanfranciscosolar.com/stc4.html</xs:documentation>
             <xs:documentation>This is an enumeration of temperature units of measurement.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="C">
+            <xs:enumeration value="CELSIUS">
                 <xs:annotation>
                     <xs:documentation>Celsius</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="F">
+            <xs:enumeration value="FARHENHEIT">
                 <xs:annotation>
                     <xs:documentation>Fahrenheit</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="K">
-                <xs:annotation>
-                    <xs:documentation>Kelvin</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R">
-                <xs:annotation>
-                    <xs:documentation>Rankine
-A thermodynamic (absolute) temperature scale named after the Scottish engineer and physicist William John Macquorn Rankine, who proposed it in 1859.</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Re">
-                <xs:annotation>
-                    <xs:documentation>The Réaumur scale (°Ré, °Re, °R), also known as the "octogesimal division",[1] is a temperature scale in which the freezing and boiling points of water are set to 0 and 80 degrees respectively. The scale is named after René Antoine Ferchault de Réaumur, who first proposed something similar in 1730.[2]
-
-AT: why are we including this? Does someone have a use case?</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
@@ -1679,7 +1562,7 @@ Use the Name attribute to capture optional name for the payment. For example, if
                     <xs:documentation>How the benefit was calculated, either Estimated, Measured, or Incentive</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="DeterminationSource" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:element name="determinationSource" type="xs:string" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                     <xs:documentation>Tool used to calculate the benefit.</xs:documentation>
                 </xs:annotation>
@@ -1933,6 +1816,7 @@ Included in Common.xsd because EquipmentDefinitionType element uses it, else wou
             <xs:documentation>A place where equipment can be located on the site or within the building. Can be used to capture site survey data before any systems are designed, and can be used to specify where specific proposed equipment will be placed during implementation. Note, it can be used to describe an existing equipment location in cases of remove and replace scenarios.</xs:documentation>
         </xs:annotation>
         <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element minOccurs="0" name="name"/>
             <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                     <xs:documentation>Detailed description of the location. Use to provide detail that can assist a user in identifying the precise location on a site, access information, etc. Typically use room names, compass directions, etc to identify the location to users.
@@ -1943,11 +1827,6 @@ When used for site surveys, should include what types of equipment are envisione
             <xs:element minOccurs="0" name="occupied" type="xs:boolean">
                 <xs:annotation>
                     <xs:documentation>Useful for describing an equipmentLocation that is either currently occupied, or proposed to be occupied by a given equipment instance.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="equipmentInstanceIdRef" type="xs:IDREF">
-                <xs:annotation>
-                    <xs:documentation>The equipmentLocation type can be used for an element where specific equipment instances are referenced to this location.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="exposure" type="xs:string" minOccurs="0" maxOccurs="1">
@@ -1997,7 +1876,11 @@ When used for site surveys, should include what types of equipment are envisione
             </xs:element>
         </xs:sequence>
         <xs:attribute name="id"/>
-        <xs:attribute name="name"/>
+        <xs:attribute name="equipmentInstanceIdRef" type="xs:IDREF">
+            <xs:annotation>
+                <xs:documentation>The equipmentLocation type can be used for an element where specific equipment instances are referenced to this location.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
     <xs:complexType name="lastServiced">
         <xs:annotation>
@@ -2022,7 +1905,7 @@ When used for site surveys, should include what types of equipment are envisione
         <xs:sequence>
             <xs:element minOccurs="0" name="name" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation>A user provided name for convenience.  For example, an electrical panel might be the "Main service entry panel", or the "AC combiner panel."</xs:documentation>
+                    <xs:documentation>A user provided name for convenience.  For example, an electrical panel might be the "Main service entry panel", or the "AC combiner panel." A pvModule name might be to identify a specific string or AC branch circuit, for example, "S1-M1" or simply "1" of the total number of modules in the string - typically named in a series.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="serialNumber" type="serialNumber" minOccurs="0" maxOccurs="1">
