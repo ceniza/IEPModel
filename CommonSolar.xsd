@@ -1207,45 +1207,6 @@
             <xs:element minOccurs="0" name="siteWeatherData" type="siteWeatherData"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType abstract="true" name="arrayInstallArea">
-        <xs:annotation>
-            <xs:documentation>Describes the geometry of an area identified for placement of a solar array.</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element minOccurs="0" name="name" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Descriptive name for the array area (a roof face, or ground area).</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="azimuth" type="angle">
-                <xs:annotation>
-                    <xs:documentation>The compass direction of the roof face, typically 90 deg. to the eave. 0 is North, and 180 is south. </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="slope" type="angle">
-                <xs:annotation>
-                    <xs:documentation>If a roof face, this is the slope, in degrees, of the roof face. Slope is not defined for ground areas because the array's structure is assumed to compensate for irregularities.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="solarAccessPercentage" type="solarAccessPercentage"> </xs:element>
-            <xs:element minOccurs="0" name="polygon2dSceneOrthoProjection" type="polygon2d">
-                <xs:annotation>
-                    <xs:documentation>Describes the geometry of the area from an orthographic view straight down (typical of satellite imagery).</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="polygon2dLocal" type="polygon2d">
-                <xs:annotation>
-                    <xs:documentation>A 2 dimensional array area polygon whose point coordinate system is local to only this polygon. This defines actual dimensions of the roof face or ground area, not a projection.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="polygon3dScene" type="polygon3d">
-                <xs:annotation>
-                    <xs:documentation>An array area defined in 3 dimensional space. The area's coordinates exist in a larger scene that may contain multiple roof faces and/or ground areas.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID"/>
-    </xs:complexType>
     <xs:simpleType name="presenceOfUndergroundEntitiesEnum">
         <xs:restriction base="xs:string">
             <xs:enumeration value="None"/>
@@ -1258,7 +1219,7 @@
             <xs:documentation>A description of the ground area of a site.  Helps describe areas that may be used for ground mount PV Systems.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="arrayInstallArea">
+            <xs:extension base="PolygonArea">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="approxArea" type="area"/>
                     <xs:element maxOccurs="1" minOccurs="0" name="soilCharacter" type="xs:string">
@@ -1741,5 +1702,13 @@ If an individual module has an orientation different from the common value, that
                 <xs:documentation>ID of the PvModuleDefinition within the PvSystem instance.  The PvModuleDefintion describes the make and model of the PV module. The PvArray is assumed to use the same module for the entire array.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="exclusionArea">
+        <xs:all>
+            <xs:element name="polygon2dSceneOrthoProjection" type="polygon2d" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="polygon2dSceneCameraView" type="polygon2d" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="polygon2dLocal" type="polygon2d" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:ID"/>
     </xs:complexType>
 </xs:schema>

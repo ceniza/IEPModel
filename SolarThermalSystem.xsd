@@ -75,7 +75,7 @@
     </xs:simpleType>
     <xs:complexType name="SolarCollectorDefinitionType">
         <xs:complexContent>
-            <xs:extension base="EquipmentDefinitionType">
+            <xs:extension base="equipmentDefinitionType">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="OpticType" type="CollectorOpticEnumType"/>
                     <xs:element name="Fluid" minOccurs="0" type="xs:string"/>
@@ -133,7 +133,7 @@
     <xs:complexType name="SolarThermalSystemType">
         <xs:sequence>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="ApplicationReferenceId"
-                type="ApplicationIdType"/>
+                type="applicationIdType"/>
             <xs:element name="Manufacturer" type="xs:string"/>
             <xs:element name="ModelNumber" type="xs:string"/>
             <xs:element minOccurs="0" name="SystemName" type="xs:string">
@@ -154,7 +154,7 @@
                 </xs:annotation>
             </xs:element>
             <xs:element minOccurs="0" name="SolarCollectorQuantity" type="xs:integer"/>
-            <xs:element minOccurs="0" name="TotalArea" type="AreaType">
+            <xs:element minOccurs="0" name="TotalArea" type="areaType">
                 <xs:annotation>
                     <xs:documentation>Area assumed to be square feet.</xs:documentation>
                 </xs:annotation>

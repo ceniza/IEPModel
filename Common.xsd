@@ -2041,47 +2041,4 @@ TODO: Look at consiolidating with the Schedule schema, also look at newly discov
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-    
-    <xs:complexType name="moduleLayout">
-        <xs:sequence>
-            <xs:element name="setbacks" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="setback">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="distance"/>
-                                </xs:sequence>
-                                <xs:attribute name="edgeIdRef" type="xs:string"/>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="moduleSpaces">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="moduleSpace" type="equipmentLocation"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="exclusionAreas" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="exclusionArea" type="exclusionArea"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID"/>
-        <xs:attribute name="installationAreaIdRef" type="xs:IDREF"/>
-    </xs:complexType>
-    <xs:complexType name="exclusionArea">
-        <xs:all>
-            <xs:element name="polygon2dSceneOrthoProjection" type="polygon2d" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="polygon2dSceneCameraView" type="polygon2d" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="polygon2dLocal" type="polygon2d" minOccurs="0" maxOccurs="1"/>
-        </xs:all>
-        <xs:attribute name="id" type="xs:ID"/>
-    </xs:complexType>
 </xs:schema>
