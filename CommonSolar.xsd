@@ -7,7 +7,8 @@
     Description: Schema contains the elements needed to define solar electric or solar thermal systems.
     **************************************************************************** -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
-    targetNamespace="http://www.iepmodel.net" elementFormDefault="unqualified"
+    targetNamespace="http://www.iepmodel.net" 
+    elementFormDefault="qualified"
     attributeFormDefault="unqualified" version="1.0">
     <xs:include schemaLocation="Common.xsd"/>
     <xs:include schemaLocation="CommonElectrical.xsd"/>
@@ -1157,7 +1158,7 @@
             <xs:element minOccurs="0" name="holes">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="1" name="hole">
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="hole">
                             <xs:annotation>
                                 <xs:documentation>A hole is a polygon that is fully enclosed by the ground area polygon. It represents the outline of any object where the array cannot be placed. </xs:documentation>
                             </xs:annotation>

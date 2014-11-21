@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iepmodel.net"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.iepmodel.net"
+	elementFormDefault="qualified" 
 	xmlns="http://www.iepmodel.net">
 	<xs:annotation>
 		<xs:documentation>
@@ -467,7 +469,7 @@ For example:
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element maxOccurs="unbounded" name="hole">
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="hole">
 							<xs:annotation>
 								<xs:documentation>A hole is a polygon completely contained within a roof face. Holes may represent outlines of chimneys, skylights, dormers, vents, etc.</xs:documentation>
 							</xs:annotation>

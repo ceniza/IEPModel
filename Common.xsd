@@ -6,8 +6,11 @@
 	v 1.x Michael Palmquist (SolarNexus Inc), Devan Johnson (kW Engineering), Paul Cobb (SaveEnergy123)
 	Description: Schema defines a set of object types that are re-used across the set of IEP Model schemas.
 	**************************************************************************** -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
-    elementFormDefault="unqualified" targetNamespace="http://www.iepmodel.net"
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns="http://www.iepmodel.net"
+    elementFormDefault="qualified" 
+    targetNamespace="http://www.iepmodel.net"
     attributeFormDefault="unqualified" version="1.0">
     <xs:complexType name="dataOriginator">
         <xs:annotation>
