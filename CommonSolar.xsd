@@ -7,8 +7,7 @@
     Description: Schema contains the elements needed to define solar electric or solar thermal systems.
     **************************************************************************** -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
-    targetNamespace="http://www.iepmodel.net" 
-    elementFormDefault="qualified"
+    targetNamespace="http://www.iepmodel.net" elementFormDefault="qualified"
     attributeFormDefault="unqualified" version="1.0">
     <xs:include schemaLocation="Common.xsd"/>
     <xs:include schemaLocation="CommonElectrical.xsd"/>
@@ -68,46 +67,59 @@
             <xs:enumeration value="dcCombiner"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:complexType name="mountingSystemDefinition">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+            <xs:extension base="equipmentDefinition">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="numberOfRowsPerRack" type="xs:int" default="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
     <xs:complexType name="mountingSystem">
         <xs:annotation>
             <xs:documentation>Describes the physical mounting structure used to secure an array of solar panels (may be photovoltaic or thermal).</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="manufacturer" type="xs:string" form="unqualified"/>
-            <xs:element name="componentsDescription" type="xs:string" form="unqualified">
+            <xs:element minOccurs="0" name="componentsDescription" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>Include model numbers and descriptions of mounting system components.  Note, if there is more than one manufacturer's parts used, list the secondary mfr's name here with its component.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="attachmentPoints" type="xs:integer" form="unqualified">
+            <xs:element minOccurs="0" name="attachmentPoints" type="xs:integer">
                 <xs:annotation>
                     <xs:documentation>Total number of attachment points for the array.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="maxAttachmentPointSpacing" type="xs:double"
-                form="unqualified">
+            <xs:element minOccurs="0" name="maxAttachmentPointSpacing" type="xs:double">
                 <xs:annotation>
                     <xs:documentation>Given in feet, the maximum spacing allowed between attachment points. See product manual for maximum spacing allowed based on maximum design wind speed.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="totalArrayWeight" type="xs:double" form="unqualified">
+            <xs:element minOccurs="0" name="totalArrayWeight" type="xs:double">
                 <xs:annotation>
                     <xs:documentation>Total weight in pounds (lbs) of the array's panels and its mounting structure components.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="totalPanelSurfaceArea" type="xs:double"
-                form="unqualified">
+            <xs:element minOccurs="0" name="totalPanelSurfaceArea" type="xs:double">
                 <xs:annotation>
                     <xs:documentation>The total surface area (in square feet) of all the panels in the array.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="roofPenetrationWeatherProofing" type="xs:string"
-                form="unqualified">
+            <xs:element minOccurs="0" name="roofPenetrationWeatherProofing" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>Description of the method used to weatherproof roof penetrations (e.g. flashing, caulk) </xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
+        <xs:attribute name="mountingSystemIdRef" type="xs:IDREF">
+            <xs:annotation>
+                <xs:documentation>TODO</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
     <xs:complexType name="inverterDefinition">
         <xs:annotation>
@@ -1590,7 +1602,6 @@ If the PvDesign is used within a Project.xml document, and the PvDesign calls fo
     <xs:complexType abstract="false" name="pvArray">
         <xs:annotation>
             <xs:documentation>A PV Array is defined as a group of modules that share the same location, and orientation. They usually share the same make and model.  A PV Array may feed one or more inverter instances (may be string/central inverter or multiple micro-inverters, one per module). 
-The PvArrayType serves as a base type for either StringPvArray or AcModulePvArrays based on their respective inverter architectures.
 Rather than define a specific array configuration using a specific PV module make and model, the GenericPvArray element allows an array to be defined simply as a total DC power output. The PvArray Base Type provides all the orientation, derate, and solar access parameters necessary to evaluate this "generic" array using a tool like NREL's PVWatts.  The GenericPvArray element is useful for feasibility studies where specific designs are not required.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -1642,11 +1653,17 @@ If an individual module has an orientation different from the common value, that
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element minOccurs="0" name="mountingSystem" type="mountingSystem">
+            <xs:element minOccurs="0" name="mountingSystemDefinition" type="mountingSystemDefinition">
                 <xs:annotation>
-                    <xs:documentation>Contains information necessary for Permitting using the Solar ABCs expedited permit process.</xs:documentation>
+                    <xs:documentation>TODO</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element minOccurs="0" name="mountingSystem" type="mountingSystem">
+                <xs:annotation>
+                    <xs:documentation>TODO</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="layout" type="moduleLayout"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID"/>
         <xs:attribute name="pvModuleDefinitionIdRef" type="xs:IDREF">

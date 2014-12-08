@@ -2090,7 +2090,7 @@ TODO: Look at consiolidating with the Schedule schema, also look at newly discov
                 type="xs:int"/>
             <xs:element form="unqualified" maxOccurs="1" minOccurs="0" name="solarAccessApr"
                 type="xs:int"/>
-            <xs:element form="unqualified" maxOccurs="1" minOccurs="0" name="SolarAccessMay"
+            <xs:element form="unqualified" maxOccurs="1" minOccurs="0" name="solarAccessMay"
                 type="xs:int"/>
             <xs:element form="unqualified" maxOccurs="1" minOccurs="0" name="solarAccessJun"
                 type="xs:int"/>

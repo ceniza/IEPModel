@@ -157,18 +157,6 @@ For heating or cooling any of the three may be used to define the schedule</xs:d
 		<xs:attribute name="id" use="required" type="xs:ID"/>
 		<xs:attribute name="type" use="required" type="scheduleEnum"/>
 	</xs:complexType>
-	<xs:complexType name="day">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="dayScheduleIdRef" use="required" type="xs:IDREF">
-					<xs:annotation>
-						<xs:documentation>ID for operation schedules</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="dayType" use="required" type="dayEnum"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
 	<xs:simpleType name="dayTypeEnum">
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="Weekday"/>

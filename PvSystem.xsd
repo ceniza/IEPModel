@@ -9,8 +9,6 @@
 **************************************************************************** -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
     targetNamespace="http://www.iepmodel.net">
-    <xs:include schemaLocation="Common.xsd"/>
-    <xs:include schemaLocation="CommonElectrical.xsd"/>
     <xs:include schemaLocation="CommonSolar.xsd"/>
     <xs:complexType name="pvSystem">
         <xs:annotation>
@@ -113,13 +111,6 @@
                                 <xs:documentation>Specifications for an AC electric panel where a String Inverter or AC PV Branch Circuit may be connected. A PvSystem may contain more than one AC electric panel make and model (each Inverter or AC PV Branch Circuit can connect to different equipment).</xs:documentation>
                             </xs:annotation>
                         </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element minOccurs="0" name="moduleLayouts">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="moduleLayout" type="moduleLayout"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
