@@ -67,18 +67,6 @@
             <xs:enumeration value="dcCombiner"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:complexType name="mountingSystemDefinition">
-        <xs:annotation>
-            <xs:documentation></xs:documentation>
-        </xs:annotation>
-        <xs:complexContent mixed="false">
-            <xs:extension base="equipmentDefinition">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="numberOfRowsPerRack" type="xs:int" default="1"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
     <xs:complexType name="mountingSystem">
         <xs:annotation>
             <xs:documentation>Describes the physical mounting structure used to secure an array of solar panels (may be photovoltaic or thermal).</xs:documentation>
@@ -114,12 +102,8 @@
                     <xs:documentation>Description of the method used to weatherproof roof penetrations (e.g. flashing, caulk) </xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element minOccurs="0" name="numberOfRowsPerRack" type="xs:int" default="1"/>
         </xs:sequence>
-        <xs:attribute name="mountingSystemIdRef" type="xs:IDREF">
-            <xs:annotation>
-                <xs:documentation>TODO</xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
     </xs:complexType>
     <xs:complexType name="inverterDefinition">
         <xs:annotation>
@@ -130,7 +114,7 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="inverterCategory" type="xs:string">
                         <xs:annotation>
-                            <xs:documentation>An optional description of the inverter's type, such as "Micro-inverter - Grid-tie," "String Inverter - Grid-tie," "Battery-based Inverter - Grid-tie/Off-grid," "Battery-based Inverter - Off-grid," "Centraal Inverter"</xs:documentation>
+                            <xs:documentation>An optional description of the inverter's type, such as "Micro-inverter - Grid-tie," "String Inverter - Grid-tie," "Battery-based Inverter - Grid-tie/Off-grid," "Battery-based Inverter - Off-grid," "Central Inverter"</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                     <xs:element minOccurs="0" name="isMicroInverter" type="xs:boolean">
@@ -142,6 +126,12 @@
                         type="xs:integer">
                         <xs:annotation>
                             <xs:documentation>The number of MPP Trackers within the inverter.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="inputMinDcOperatingVoltage"
+                        type="xs:double">
+                        <xs:annotation>
+                            <xs:documentation>Lower end of the inverter's DC operating voltage window.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                     <xs:element maxOccurs="1" minOccurs="0" name="inputMinMpptDcVoltage"
@@ -260,6 +250,11 @@
                     <xs:element minOccurs="0" name="acOcpdInterruptCapacity" type="xs:integer">
                         <xs:annotation>
                             <xs:documentation>Interrupt rating in kAic for the AC OCPD.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="maxNumberOfInvertersPerBranch" type="xs:integer">
+                        <xs:annotation>
+                            <xs:documentation>The maximum number of inverters of this type that may be wired together in a branch. This applies only to microinverters</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                     <xs:element minOccurs="0" name="integratedAcDisconnect" type="xs:string">
@@ -1652,11 +1647,6 @@ If an individual module has an orientation different from the common value, that
                         </xs:element>
                     </xs:sequence>
                 </xs:complexType>
-            </xs:element>
-            <xs:element minOccurs="0" name="mountingSystemDefinition" type="mountingSystemDefinition">
-                <xs:annotation>
-                    <xs:documentation>TODO</xs:documentation>
-                </xs:annotation>
             </xs:element>
             <xs:element minOccurs="0" name="mountingSystem" type="mountingSystem">
                 <xs:annotation>
