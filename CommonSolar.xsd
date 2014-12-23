@@ -129,7 +129,7 @@
                         </xs:annotation>
                     </xs:element>
                     <xs:element maxOccurs="1" minOccurs="0" name="inputMaxMpptDcCurrent" 
-                        type="xs:integer">
+                        type="xs:double">
                         <xs:annotation>
                             <xs:documentation>The maximum DC input current for each MPPT</xs:documentation>
                         </xs:annotation>
