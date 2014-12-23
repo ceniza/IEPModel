@@ -1867,6 +1867,11 @@ When used for site surveys, should include what types of equipment are envisione
                     <xs:documentation>Use to decribe a the footprint of an equipment location within a 2d graph that only includes a single equipment location. Useful for describing the shape of a footprint.</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element minOccurs="0" name="polygon2dSceneCameraView" type="polygon2d">
+                <xs:annotation>
+                    <xs:documentation>Use to decribe a the footprint of an equipment location within a 2d graph that only includes a single equipment location. Useful for describing the shape of a footprint.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element minOccurs="0" name="zoneIdRef" type="xs:IDREF">
                 <xs:annotation>
                     <xs:documentation>The conditioned zone that this EquipmentLocation occupies.</xs:documentation>

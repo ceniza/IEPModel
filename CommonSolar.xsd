@@ -1214,13 +1214,20 @@
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID"/>
     </xs:complexType>
+    <xs:simpleType name="presenceOfUndergroundEntitiesEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="Yes (location marked)"/>
+            <xs:enumeration value="Yes (location TBD)"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:complexType name="groundArrayInstallAreas">
         <xs:annotation>
             <xs:documentation>Collection of ground areas at the site that can be used for siting solar arrays.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element maxOccurs="unbounded" name="groundArrayInstallArea"
-                type="groundArrayInstallArea"/>
+                type="GroundArea"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="roofArrayInstallAreas">

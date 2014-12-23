@@ -426,6 +426,32 @@ For example:
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:ID"/>
 	</xs:complexType>
+	<xs:complexType name="InstallationAreaHole">
+		<xs:annotation>
+			<xs:documentation>Defines a single edge of a defined polygon and associates a type to it. Useful for identifying array areas where different edge types have different setback rules.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+		<xs:extension base="PolygonArea">
+			<xs:sequence>
+				<xs:element minOccurs="0" name="edges">
+					<xs:annotation>
+						<xs:documentation>Contains the set of polygon sides that define the roof face.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="3" name="edge"
+								type="roofEdge">
+								<xs:annotation>
+									<xs:documentation>A single edge of the roof face that identifies its type. There are different setback rules applied to different types of roof face edges, so each edge's type must be defined. Each edge is defined by two points of a polygon.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="roofFace">
 		<xs:annotation>
 			<xs:documentation>A single external plane of an entire roof structure.</xs:documentation>
@@ -512,6 +538,133 @@ For example:
 				<xs:annotation>
 					<xs:documentation>This element describes the roof face's structural attributes.</xs:documentation>
 				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID"/>
+		<xs:complexContent>
+			<xs:extension base="PolygonArea">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="edges">
+						<xs:annotation>
+							<xs:documentation>Contains the set of polygon sides that define the roof face.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="3" name="edge"
+									type="roofEdge">
+									<xs:annotation>
+										<xs:documentation>A single edge of the roof face that identifies its type. There are different setback rules applied to different types of roof face edges, so each edge's type must be defined. Each edge is defined by two points of a polygon.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element form="unqualified" minOccurs="0" name="structure"
+						type="roofFaceStructure">
+						<xs:annotation>
+							<xs:documentation>This element describes the roof face's structural attributes.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GroundArea">
+		<xs:annotation>
+			<xs:documentation>A description of the ground area of a site.  Helps describe areas that may be used for ground mount PV Systems.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PolygonArea">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="approxArea" type="area"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="soilCharacter" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>A description of the soil type found here. May be a subjective description, such as rocky, clay, sandy, etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="notes" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>User can capture info about other data fields, and/or describe special circumstances, such as: Types of buried lines and how marked, Equipment &amp;/or materials access issues, whether there is an existing professional soils report, if the site is in a biotic reserve (when applicable), &amp;/or whether an environmental impact report has been done</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="presenceOfBuriedLines"
+						type="presenceOfUndergroundEntitiesEnum">
+						<xs:annotation>
+							<xs:documentation>Are there buried lines of any kind? In accompanying notes, user should include if mapped on some document.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="presenceOfSepticTanksAndLeachFields"
+						type="presenceOfUndergroundEntitiesEnum">
+						<xs:annotation>
+							<xs:documentation>Is there a septic tank &amp;/or leach field in the vicinity? Auditor needs to clearly identify their location on a site schematic.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="tractorTrencherAccessible"
+						type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Can a tractor and/or trenching equipment access the ground location?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType abstract="true" name="PolygonArea">
+		<xs:annotation>
+			<xs:documentation>Describes the geometry of an area identified for placement of a solar array.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Descriptive name for the array area (a roof face, or ground area).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="azimuth" type="angle">
+				<xs:annotation>
+					<xs:documentation>The compass direction of the roof face, typically 90 deg. to the eave. 0 is North, and 180 is south. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="slope" type="angle">
+				<xs:annotation>
+					<xs:documentation>If a roof face, this is the slope, in degrees, of the roof face. Slope is not defined for ground areas because the array's structure is assumed to compensate for irregularities.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="area" type="area">
+				<xs:annotation>
+					<xs:documentation>Area in feet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="solarAccessPercentage" type="solarAccessPercentage"> </xs:element>
+			<xs:element minOccurs="0" name="polygon2dSceneOrthoProjection" type="polygon2d">
+				<xs:annotation>
+					<xs:documentation>Describes the geometry of the area from an orthographic view straight down (typical of satellite imagery).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="polygon2dLocal" type="polygon2d">
+				<xs:annotation>
+					<xs:documentation>A 2 dimensional array area polygon whose point coordinate system is local to only this polygon. This defines actual dimensions of the roof face or ground area, not a projection.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="polygon3dScene" type="polygon3d">
+				<xs:annotation>
+					<xs:documentation>An array area defined in 3 dimensional space. The area's coordinates exist in a larger scene that may contain multiple roof faces and/or ground areas.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" maxOccurs="1" name="holes">
+				<xs:annotation>
+					<xs:documentation>Contains the set of roof holes that define holes in the roof polygon.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="hole"
+							type="InstallationAreaHole">
+							<xs:annotation>
+								<xs:documentation>A hole in the RoofFace polygon</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:ID"/>
