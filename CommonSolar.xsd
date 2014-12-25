@@ -122,6 +122,11 @@
                             <xs:documentation>Provides a definitive way of differentiating the inverter architecture as a String or Micro-Inverter. If TRUE, then the inverter is intended to be placed in series into an AC PV branch circuit.  All other inverters essentially conform to a string architecture. </xs:documentation>
                         </xs:annotation>
                     </xs:element>
+                    <xs:element minOccurs="0" name="isIntegratableMicroInverter" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>(if isMicroInverter == true) Provides a definitive way of differentiating the inverter architecture as a String or Micro-Inverter. If TRUE, then the inverter is intended to be placed in series into an AC PV branch circuit.  All other inverters essentially conform to a string architecture. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                     <xs:element maxOccurs="1" minOccurs="0" name="mppTrackerQuantity"
                         type="xs:integer">
                         <xs:annotation>
@@ -426,11 +431,18 @@
                             <xs:documentation>Is this an ACPV module sold as single unit with an integrated microInverter?</xs:documentation>
                         </xs:annotation>
                     </xs:element>
-                    <xs:element minOccurs="0" name="integratedMicroInverterIdRef" type="xs:IDREF">
-                        <xs:annotation>
-                            <xs:documentation>If acpvModule = TRUE, this references the specifications for the integrated microInverter. </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
+                    <xs:choice>
+                        <xs:element minOccurs="0" name="integratedMicroInverterIdRef" type="xs:IDREF">
+                            <xs:annotation>
+                                <xs:documentation>If acpvModule = TRUE, this references the specifications for the integrated microInverter. </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="integratedMicroInverter" type="inverterDefinition">
+                            <xs:annotation>
+                                <xs:documentation>If acpvModule = TRUE, this represents integrated microInverter. </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
                     <xs:element maxOccurs="1" minOccurs="0" name="pstc">
                         <xs:annotation>
                             <xs:documentation>Rated power output at Standard Test Conditions (stc).</xs:documentation>
