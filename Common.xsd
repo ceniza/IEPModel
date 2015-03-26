@@ -1963,29 +1963,19 @@ When used for site surveys, should include what types of equipment are envisione
             <xs:documentation>Describes what weather data to use in an analysis.  Provides a means to specify a location and type of weather file dataset to use in an analysis.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element form="unqualified" name="stationCategory" type="xs:string" minOccurs="0">
+            <xs:element name="stationCategory" type="xs:string" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Describes the set of weather stations, or geographic cells used to specify the site's weather.  Examples include: WBAN, WMO, NREL 40km Monthly Grid Cell, etc. </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element form="unqualified" minOccurs="0" name="stationId" type="xs:string">
+            <xs:element minOccurs="0" name="stationId" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>The ID number used within the associated Station Category system.  If the Station Category is "WBAN," then this element would contain the WBAN number for the desired station.  For example, San Francisco, CA is WBAN "23234."  And Cairo, Egypt is WMO "623660."</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element form="unqualified" minOccurs="0" name="weatherDataset" type="xs:string">
+            <xs:element minOccurs="0" name="irradianceDataset" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>Type of weather dataset, such as TMY, TMY2, IWEC, etc.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="highestMonthlyAverageHighTemperature" type="xs:integer">
-                <xs:annotation>
-                    <xs:documentation>Required for configuring inverter circuits. Of the monthly average high temperatures for the site, the highest one.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="recordLowTemperture" type="xs:integer">
-                <xs:annotation>
-                    <xs:documentation>Lowest historic temperature. Required for configuring PV inverter circuits. Used to find highest PV system string voltage when cold and sunny, and therefore longest possible string. </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element minOccurs="0" name="designWindSpeed" type="xs:integer">
@@ -1993,6 +1983,44 @@ When used for site surveys, should include what types of equipment are envisione
                     <xs:documentation>Required for PV system structural validations. For CA permitting guidebook, speed must be less than 110mph. This is based from ASCE 7-10, risk category II for CA.</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element minOccurs="0" name="temperatureDatasets" type="TemperatureDatasets">
+                <xs:annotation>
+                    <xs:documentation>Required for configuring inverter circuits. Of the monthly average high temperatures for the site, the highest one.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TemperatureDatasets">
+        <xs:sequence>
+            <xs:element name="historicTemperatureDataset" type="HistoricTemperatureDataset" minOccurs="0" />
+            <xs:element name="ashraeTemperatureDataset" type="AshraeTemperatureDataset" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HistoricTemperatureDataset">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="recordLowTemperature" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Lowest historic temperature. Required for configuring PV inverter circuits. Used to find highest PV system string voltage when cold and sunny, and therefore longest possible string. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="highestMonthlyAverageHighTemperature" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Required for configuring inverter circuits. Of the monthly average high temperatures for the site, the highest one.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AshraeTemperatureDataset">
+        <xs:sequence>
+            <xs:element name="minimumMeanExtremeDryBulbTemperature" type="xs:double" minOccurs="0" />
+            <xs:element name="maximumMeanExtremeDryBulbTemperature" type="xs:double" minOccurs="0" />
+            <xs:element name="highestMonth0d4PercentDryBulbTemperature" type="xs:double" minOccurs="0" />
+            <xs:element name="highestMonth1PercentDryBulbTemperature" type="xs:double" minOccurs="0" />
+            <xs:element name="highestMonth2PercentDryBulbTemperature" type="xs:double" minOccurs="0" />
+            <xs:element name="highTemperatureInConduitHalfInchAboveRoof" type="xs:double" minOccurs="0" />
+            <xs:element name="highTemperatureInConduitThreeAndHalfInchesAboveRoof" type="xs:double" minOccurs="0" />
+            <xs:element name="highTemperatureInConduitOneFootAboveRoof" type="xs:double" minOccurs="0" />
+            <xs:element name="highTemperatureInConduitThreeFeetAboveRoof" type="xs:double" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="intervalDataDouble">
