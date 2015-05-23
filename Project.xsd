@@ -9,12 +9,18 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iepmodel.net"
 	elementFormDefault="qualified" targetNamespace="http://www.iepmodel.net"
 	attributeFormDefault="unqualified" version="1.0">
+	<xs:include schemaLocation="Appliance.xsd"/>
 	<xs:include schemaLocation="Building.xsd"/>
 	<xs:include schemaLocation="Common.xsd"/>
+	<xs:include schemaLocation="DistributionSystem.xsd"/>
 	<xs:include schemaLocation="CommonElectrical.xsd"/>
+	<xs:include schemaLocation="HVACSystem.xsd"/>
+	<xs:include schemaLocation="LightingSystem.xsd"/>
 	<xs:include schemaLocation="Participant.xsd"/>
 	<xs:include schemaLocation="PvSystem.xsd"/>
+	<xs:include schemaLocation="SolarThermalSystem.xsd"/>
 	<xs:include schemaLocation="UtilityService.xsd"/>
+	<xs:include schemaLocation="WaterHeatingSystem.xsd"/>
 	<xs:element name="project" type="project"/>
 	<xs:complexType name="changeLog">
 		<xs:sequence>
@@ -582,6 +588,53 @@ Included reference to Utility Service here instead of in Building since Project 
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element maxOccurs="unbounded" name="pvSystem" type="pvSystem"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="solarThermalSystems">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="solarThermalSystem"
+							type="SolarThermalSystemType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="appliances">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="1" name="existingAppliance"
+							type="appliance"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="hvacSystems">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="HVACSystem" type="HVACSystemType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="lightingSystems">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="lightingSystem"
+							type="LightingSystemType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="waterHeatingSystems">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="waterHeatingSystem"
+							type="WaterHeatingSystemType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="distributionSystems">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="distributionSystem"
+							type="DistributionSystemType"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
