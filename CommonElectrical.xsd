@@ -821,7 +821,7 @@ Optionally, the CircuitConnectionType contains an optional EquipmentWhereConnect
                 </xs:complexType>
             </xs:element>
             <xs:element minOccurs="0" name="maximumWireTemperature"/>
-            <xs:element default="load-side" minOccurs="0" name="sideOfPanelOcpdWhereConnected"
+            <xs:element default="LOAD_SIDE" minOccurs="0" name="sideOfPanelOcpdWhereConnected"
                 type="sideOfPanelOcpdWhereConnectedEnum">
                 <xs:annotation>
                     <xs:documentation>When a circuit connection's targetComponent is an ElectricalPanel, this describes which side of a the panel's main breaker (if present) that the interconnection is made (supply or load side)?
