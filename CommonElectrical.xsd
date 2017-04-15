@@ -340,6 +340,36 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:complexType name="transitionBoxDefinition">
+        <xs:annotation>
+            <xs:documentation>A definition for a piece of electrical equipment used to join pieces of conduit together or to act as a location for making splices. In the model, specific instances of junction boxes are modeled as WirewayBoxes. Note that a JunctionBox may not combine any circuits, a separate DcCombiner element is defined for that purpose in PvSystems.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="equipmentDefinition">
+                 <xs:sequence>
+                     <xs:element name="maxContinuousCurrent" type="xs:integer" minOccurs="1" maxOccurs="1">
+                         <xs:annotation>
+                             <xs:documentation>Rating of the bus, in Amps.</xs:documentation>
+                         </xs:annotation>
+                     </xs:element>
+                     <xs:element name="inputOutputCircuitQuantity" type="xs:integer" minOccurs="1" maxOccurs="1">
+                         <xs:annotation>
+                             <xs:documentation>Rating of the bus, in Amps.</xs:documentation>
+                         </xs:annotation>
+                     </xs:element>
+                 </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="transitionBoxDefinitions">
+        <xs:annotation>
+            <xs:documentation>A collection of the junction box equipment definitions in the associated system.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="transitionBoxDefinition"
+                type="transitionBoxDefinition"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="junctionBoxDefinition">
         <xs:annotation>
             <xs:documentation>A definition for a piece of electrical equipment used to join pieces of conduit together or to act as a location for making splices. In the model, specific instances of junction boxes are modeled as WirewayBoxes. Note that a JunctionBox may not combine any circuits, a separate DcCombiner element is defined for that purpose in PvSystems.</xs:documentation>
@@ -355,6 +385,27 @@
         <xs:sequence>
             <xs:element maxOccurs="unbounded" name="junctionBoxDefinition"
                 type="junctionBoxDefinition"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="transitionBox">
+        <xs:annotation>
+            <xs:documentation>A junctionBox is used to splice different circuitConnections together, as in the case of string wiring transitioning from free air to wire in conduit. circuitConnections may also pass through a junction box like it is a conduit segment. A junctionBox cannot change the current or voltage characteristics of any circuits. They may not combine or distribute current like a DcCombiner or ElectricalPanel.  They may not change voltage characteristics such as a StringInverter. Note that a juntionBox may or may not refer to a defined piece of Equipment (e.g. a JunctionBoxDefintion, DisconnectSwitchDefinition, StandAloneMeterSocketDefintion). It may instead contain a free text name.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="wirewayBox"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="transitionBoxes">
+        <xs:annotation>
+            <xs:documentation>A collection of the junction boxes in the associated system.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="transitionBox" type="transitionBox">
+                <xs:annotation>
+                    <xs:documentation>A junction box used in this design. circuitConnections may start/end at a junctionBox, or they may pass through. Multiple circuitConnections may pass through a junctionBox.
+                        Note that if the pvSystem is used in an IEPM Project file, the junctionBox does not reference any existingWirewaySegments or ProposedWirewaySegments defined in the Site element.  Those elements are used for site survey data collection, not system definition.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="junctionBox">
@@ -385,11 +436,7 @@ Note that if the pvSystem is used in an IEPM Project file, the junctionBox does 
         <xs:complexContent>
             <xs:extension base="equipmentDefinition">
                 <xs:sequence>
-                    <xs:element minOccurs="1" name="discoRating" type="xs:integer">
-                        <xs:annotation>
-                            <xs:documentation>Rating in amps for disconnecting an AC or DC circuit.</xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
+                    <xs:element minOccurs="1" name="currentRating" type="xs:integer"/>
                     <xs:element minOccurs="0" name="acVoltageRating" type="xs:integer"/>
                     <xs:element minOccurs="0" name="dcVoltageRating" type="xs:integer"/>
                     <xs:element name="switchContact" minOccurs="0" type="switchContactActionEnum">
@@ -873,7 +920,7 @@ Circuit connections have two ends. One is defined by the sourceComponentIdRef, t
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="id"/>
+        <xs:attribute name="id" type="xs:ID"/>
     </xs:complexType>
     <xs:complexType name="circuitConnections">
         <xs:annotation>
