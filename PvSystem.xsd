@@ -95,6 +95,14 @@
             <xs:element minOccurs="0" name="fuseDefintions" type="fuseDefinitions"> </xs:element>
             <xs:element minOccurs="0" name="conductorDefinitions" type="conductorDefinitions"/>
             <xs:element minOccurs="0" name="conduitDefinitions" type="conduitDefinitions"/>
+            <xs:element minOccurs="0" name="mountingSystemDefinitions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="mountingSystemDefinition"
+                            type="mountingSystemDefinition"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element minOccurs="0" name="pvArrays">
                 <xs:complexType>
                     <xs:sequence>
@@ -202,6 +210,14 @@ NOTE: An AC Module is assumed to be either:
                 </xs:annotation>
             </xs:element>
             <xs:element minOccurs="0" name="acPointOfConnection" type="acPointOfConnection"/>
+            <xs:element minOccurs="0" name="mountingSystems">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="mountingSystem"
+                            type="mountingSystem"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="sceneOriginGeoTag" type="geoLocation" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                     <xs:documentation>Coordinate system geo reference origin for the system.  All child components that specify 3D coordinates are in units meters relative to this location.  The 3D coordinate of this origin is (0,0,0).</xs:documentation>

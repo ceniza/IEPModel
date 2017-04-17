@@ -85,7 +85,7 @@
         <xs:complexContent>
             <xs:extension base="equipmentInstance">
                 <xs:sequence>
-                    <xs:element name="componentsDescription" type="xs:string">
+                    <xs:element minOccurs="0" name="componentsDescription" type="xs:string">
                         <xs:annotation>
                             <xs:documentation>Include model numbers and descriptions of mounting system components.  Note, if there is more than one manufacturer's parts used, list the secondary mfr's name here with its component.</xs:documentation>
                         </xs:annotation>
@@ -1782,11 +1782,7 @@ If an individual module has an orientation different from the common value, that
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element minOccurs="0" name="mountingSystem" type="mountingSystem">
-                <xs:annotation>
-                    <xs:documentation>Information used to describe the mounting system and if roof mounted, assess the structural support underlying the mounting system. For example, the State of California's expedited permit process.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="0" name="mountingSystemIdRef" type="xs:IDREF"/>
             <xs:element minOccurs="0" name="moduleLayout" type="moduleLayout">
                 <xs:annotation>
                     <xs:documentation>Physical layout positions of the modules within the array.</xs:documentation>
