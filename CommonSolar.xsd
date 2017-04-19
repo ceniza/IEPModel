@@ -143,6 +143,11 @@
                             <xs:documentation>Description of the method used to weatherproof roof penetrations (e.g. flashing, caulk) </xs:documentation>
                         </xs:annotation>
                     </xs:element>
+                    <xs:element minOccurs="0" name="commonModuleStandoff" type="xs:double">
+                        <xs:annotation>
+                            <xs:documentation>Standoff describes the average spacing from the back of the modules to the installation surface (e.g. roof or ground).  Standoff is used in calculating system output when the calculator considers heat effects of reduced air circulation to the back of the modules.  Many incentive programs reduce incentive payments when air circulation is minimal.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -1500,7 +1505,7 @@ If circuit connections vary between strings, this element should not be used.  I
             <xs:element name="pvModules">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="pvModuleIdRef"/>
+                        <xs:element maxOccurs="unbounded" name="pvModuleIdRef" type="xs:IDREF"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -1749,11 +1754,6 @@ If the PvDesign is used within a Project.xml document, and the PvDesign calls fo
             <xs:element minOccurs="0" name="azimuth" type="angle"/>
             <xs:element minOccurs="0" name="tilt" type="angle"/>
             <xs:element default="FIXED" minOccurs="0" name="trackingMode" type="trackingModeEnum"/>
-            <xs:element minOccurs="0" name="commonModuleStandoff" type="xs:double">
-                <xs:annotation>
-                    <xs:documentation>Standoff describes the average spacing from the back of the modules to the installation surface (e.g. roof or ground).  Standoff is used in calculating system output when the calculator considers heat effects of reduced air circulation to the back of the modules.  Many incentive programs reduce incentive payments when air circulation is minimal.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element minOccurs="0" name="commonModuleOrientation" type="panelOrientationEnum">
                 <xs:annotation>
                     <xs:documentation>The orientation of the rectangular module.  "Portrait" indicates that the long dimension is vertical, while "Landscape" indicates that the long dimension is horizontal.
