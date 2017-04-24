@@ -357,6 +357,11 @@
                              <xs:documentation>Rating of the bus, in Amps.</xs:documentation>
                          </xs:annotation>
                      </xs:element>
+                     <xs:element name="integratedRapidShutdownDevice" type="xs:boolean" minOccurs="0" maxOccurs="1">
+                         <xs:annotation>
+                             <xs:documentation>Indicates if transition box has an integrated rapid shutdown device</xs:documentation>
+                         </xs:annotation>
+                     </xs:element>
                  </xs:sequence>
             </xs:extension>
         </xs:complexContent>

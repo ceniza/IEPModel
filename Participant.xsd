@@ -40,7 +40,7 @@ mailing addresses are closely associated with the role of the participant, not t
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element minOccurs="0" name="adresses">
+			<xs:element minOccurs="0" name="addresses">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="address" type="address" minOccurs="1"
@@ -175,10 +175,16 @@ mailing addresses are closely associated with the role of the participant, not t
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="caId" type="xs:int" minOccurs="1" maxOccurs="1">
+			<xs:element name="caId" type="xs:int" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Reference to Certifying  Authority
 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="caName" type="xs:string" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of Certifying  Authority
+					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1">
@@ -186,24 +192,24 @@ mailing addresses are closely associated with the role of the participant, not t
 					<xs:documentation>Credential short name</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1">
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Credential long name
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="dateConferred" type="xs:date" minOccurs="1" maxOccurs="1">
+			<xs:element name="dateConferred" type="xs:date" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Date credential first conferred </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="dateExpires" type="xs:date" minOccurs="1" maxOccurs="1">
+			<xs:element name="dateExpires" type="xs:date" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Date credential expires (may be past)
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="status" type="xs:string" minOccurs="1" maxOccurs="1">
+			<xs:element name="status" type="xs:string" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Status (valid, expired, etc,); varies by CA</xs:documentation>
 				</xs:annotation>
