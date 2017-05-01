@@ -1186,7 +1186,7 @@
                     <xs:documentation>Expected lowest temperature in degrees Celcius at the system's location.  Used to evaluate maximum system output.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" name="siteWeatherData" type="siteWeatherData"/>
+            <xs:element minOccurs="0" name="siteWeatherData" type="SiteWeatherData"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="exclusionArea">
